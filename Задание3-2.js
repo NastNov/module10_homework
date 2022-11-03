@@ -42,11 +42,11 @@ function pageLoaded() {
     const geoHref = document.createElement("a");
     geoHref.href = "";
     geoHref.textContent = "";
-    if (!navigator.geolocation) {
-      infoOutput.textContent = "Geolocation не поддерживается вашим браузером";
-    } else {
+    if ("geolocation" in navigator) {
       infoOutput.textContent = "Определение местоположения…";
       navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      infoOutput.textContent = "Geolocation не поддерживается вашим браузером";
     }
   };
   
@@ -55,6 +55,7 @@ function pageLoaded() {
     const latitude  = position.coords.latitude;
     const longitude = position.coords.longitude;
     infoOutput.textContent = `Широта: ${latitude} °, Долгота: ${longitude} °`;
+    const geoHref = document.createElement("a");
     geoHref.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
     geoHref.textContent = "Ссылка на карту";
     geoHref.target = "_blank";
